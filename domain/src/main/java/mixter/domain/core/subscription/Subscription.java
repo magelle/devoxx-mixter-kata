@@ -10,6 +10,7 @@ import mixter.domain.core.subscription.events.UserFollowed;
 import mixter.domain.core.subscription.events.UserUnfollowed;
 import mixter.domain.identity.UserId;
 
+import java.awt.*;
 import java.util.List;
 
 @Aggregate
@@ -32,6 +33,10 @@ public class Subscription {
     public void notifyFollower(MessageId messageId, EventPublisher eventPublisher) {
         if(! projection.isDisabled())
             eventPublisher.publish(new FolloweeMessageQuacked(projection.id, messageId));
+    }
+
+    public SubscriptionId getId() {
+        return projection.id;
     }
 
     private class DecisionProjection extends DecisionProjectionBase{
