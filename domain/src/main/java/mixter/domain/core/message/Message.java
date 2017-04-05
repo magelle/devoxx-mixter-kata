@@ -37,7 +37,8 @@ public class Message {
     }
 
     public void delete(UserId authorId, EventPublisher eventPublisher) {
-        eventPublisher.publish(new MessageDeleted(projection.getId()));
+        if(projection.publishers.contains(authorId))
+            eventPublisher.publish(new MessageDeleted(projection.getId()));
     }
 
     @Projection
