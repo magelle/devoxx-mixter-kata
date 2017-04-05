@@ -9,4 +9,6 @@ public interface TimelineMessageRepository {
     TimelineMessageProjection save(TimelineMessageProjection message);
 
     Iterator<TimelineMessageProjection> getMessageOfUser(UserId ownerId);
+
+    void delete(MessageId messageId);
 }

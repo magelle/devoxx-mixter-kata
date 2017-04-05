@@ -59,5 +59,11 @@ public class UpdateTimelineTest {
             throw new NotImplementedException();
         }
 
+        @Override
+        public void delete(MessageId messageId) {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
