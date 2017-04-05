@@ -5,6 +5,7 @@ import mixter.domain.Event;
 import mixter.domain.core.subscription.FollowerRepository;
 import mixter.domain.core.subscription.SubscriptionId;
 import mixter.domain.core.subscription.events.UserFollowed;
+import mixter.domain.core.subscription.events.UserUnfollowed;
 
 @Handler
 public class UpdateFollowers {
@@ -18,5 +19,10 @@ public class UpdateFollowers {
     public void apply(UserFollowed userFollowed) {
         SubscriptionId subscriptionId = userFollowed.getSubscriptionId();
         repository.saveFollower(subscriptionId.getFollowee(), subscriptionId.getFollower());
+    }
+
+    public void apply(UserUnfollowed userUnfollowed) {
+        SubscriptionId subscriptionId = userUnfollowed.getSubscriptionId();
+        repository.removeFollower(subscriptionId.getFollowee(), subscriptionId.getFollower());
     }
 }
