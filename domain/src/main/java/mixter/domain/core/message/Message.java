@@ -19,7 +19,7 @@ public class Message {
     private DecisionProjection projection;
 
     public Message(List<Event> history) {
-        projection=new DecisionProjection(history);
+        projection = new DecisionProjection(history);
     }
 
     public static MessageId quack(UserId authorId, String message, EventPublisher eventPublisher) {
@@ -29,7 +29,7 @@ public class Message {
     }
 
     public void reQuack(UserId userId, EventPublisher eventPublisher, UserId authorId, String message) {
-        if (projection.publishers.contains(userId)) {
+        if (projection.publishers.contains(userId) || projection.isDeleted()) {
             return;
         }
         MessageRequacked event = new MessageRequacked(projection.getId(), userId, authorId, message);
@@ -44,7 +44,7 @@ public class Message {
     @Projection
     private class DecisionProjection extends DecisionProjectionBase {
         private MessageId id;
-        public Set<UserId> publishers=new HashSet<>();
+        public Set<UserId> publishers = new HashSet<>();
         private boolean deleted = false;
 
         public DecisionProjection(List<Event> history) {
