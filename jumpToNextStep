@@ -1,19 +1,10 @@
 #!/bin/bash
 
-git add -A
-git commit -m "Abort test"
-git checkout -b workshop-step5 step5
-git merge step5-test1 > /dev/null
-git checkout --ours .
-git add .
-git commit -m "Merge with test branch"
-
-echo ""
-echo ""
-
 printf '\033[0;32m'
-cat stepsDoc/step5.txt
+echo ""
+echo ""
+cat stepsDoc/end.txt
+echo ""
+echo ""
 printf '\033[0m'
 
-echo ""
-echo ""

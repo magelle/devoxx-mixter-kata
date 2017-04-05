@@ -2,14 +2,14 @@
  
 git add -A
 git commit -m "Resolve test"
-git merge step5-test1
-
-echo ""
-echo ""
+git merge step5-test2
 
 printf '\033[0;32m'
-cat stepsDoc/step5.txt
+echo ""
+echo ""
+echo "========================"
+echo "===  STEP 5 - Test 2 ==="
+echo "========================"
+echo ""
+echo ""
 printf '\033[0m'
-
-echo ""
-echo ""
