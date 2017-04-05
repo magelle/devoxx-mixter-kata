@@ -5,6 +5,7 @@ import mixter.doc.Projection;
 import mixter.domain.DecisionProjectionBase;
 import mixter.domain.Event;
 import mixter.domain.EventPublisher;
+import mixter.domain.core.message.events.MessageDeleted;
 import mixter.domain.identity.UserId;
 import mixter.domain.core.message.events.MessageQuacked;
 import mixter.domain.core.message.events.MessageRequacked;
@@ -22,7 +23,7 @@ public class Message {
     }
 
     public static MessageId quack(UserId authorId, String message, EventPublisher eventPublisher) {
-        MessageId messageId = MessageId.generate();;
+        MessageId messageId = MessageId.generate();
         eventPublisher.publish(new MessageQuacked(messageId, message, authorId));
         return messageId;
     }
@@ -33,6 +34,10 @@ public class Message {
         }
         MessageRequacked event = new MessageRequacked(projection.getId(), userId, authorId, message);
         eventPublisher.publish(event);
+    }
+
+    public void delete(UserId authorId, EventPublisher eventPublisher) {
+        eventPublisher.publish(new MessageDeleted(projection.getId()));
     }
 
     @Projection
