@@ -30,14 +30,17 @@ public class Subscription {
     }
 
     public void notifyFollower(MessageId messageId, EventPublisher eventPublisher) {
-        eventPublisher.publish(new FolloweeMessageQuacked(projection.id, messageId));
+        if(! projection.isDisabled())
+            eventPublisher.publish(new FolloweeMessageQuacked(projection.id, messageId));
     }
 
     private class DecisionProjection extends DecisionProjectionBase{
         private SubscriptionId id;
+        private boolean disabled = false;
 
         public DecisionProjection(List<Event> history) {
             this.register(UserFollowed.class, this::apply);
+            this.register(UserUnfollowed.class, this::apply);
             history.forEach(this::apply);
         }
 
@@ -45,8 +48,16 @@ public class Subscription {
             this.id = even.getSubscriptionId();
         }
 
+        public void apply(UserUnfollowed even) {
+            this.disabled = true;
+        }
+
         public SubscriptionId getId() {
             return id;
+        }
+
+        public boolean isDisabled() {
+            return disabled;
         }
     }
 }
